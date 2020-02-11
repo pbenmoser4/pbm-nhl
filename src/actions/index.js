@@ -3,9 +3,8 @@ import _ from 'lodash';
 import {
   GET_STANDINGS,
   GET_TEAMS,
-  GET_CONFERENCE,
+  GET_TEAMS_STATS,
   GET_CONFERENCES,
-  GET_DIVISION,
   GET_DIVISIONS,
   GET_SCHEDULE,
 } from './types';
@@ -13,9 +12,8 @@ import {
 import {
   LOG_GET_STANDINGS,
   LOG_GET_TEAMS,
-  LOG_GET_CONFERENCE,
+  LOG_GET_TEAMS_STATS,
   LOG_GET_CONFERENCES,
-  LOG_GET_DIVISION,
   LOG_GET_DIVISIONS,
   LOG_GET_SCHEDULE,
 } from './types';
@@ -75,46 +73,21 @@ const shouldFetch = (urlKey, state) => {
 }
 
 const urlKeyWithParams = (urlBase, params) => {
-  let urlKey = urlBase;
+  let urlKey = String(urlBase);
   if (Object.keys(params).length > 0) {
+    urlKey += "?";
     const paramsKeys = _.sortedUniq(Object.keys(params));
+    let paramsArray = [];
     paramsKeys.forEach((key) => {
-      urlKey += `/${key}=${params[key]}`;
+      paramsArray.push(`${key}=${params[key]}`);
     });
+    urlKey += paramsArray.join("&");
   }
   return urlKey;
 }
 
 export const getStandings = (props={}) => async (dispatch, getState) => {
   // GET https://statsapi.web.nhl.com/api/v1/standings
-
-  // {
-  //   "team" : {
-  //     "id" : 52,
-  //     "name" : "Winnipeg Jets",
-  //     "link" : "/api/v1/teams/52"
-  //   },
-  //   "leagueRecord" : {
-  //     "wins" : 37,
-  //     "losses" : 17,
-  //     "ot" : 9,
-  //     "type" : "league"
-  //   },
-  //   "goalsAgainst" : 170,
-  //   "goalsScored" : 213,
-  //   "points" : 83,
-  //   "divisionRank" : "2",
-  //   "conferenceRank" : "3",
-  //   "leagueRank" : "6",
-  //   "wildCardRank" : "0",
-  //   "row" : 35,
-  //   "gamesPlayed" : 63,
-  //   "streak" : {
-  //     "streakType" : "losses",
-  //     "streakNumber" : 1,
-  //     "streakCode" : "L1"
-  //   },
-  // }
   const url = "/standings";
   if (!shouldFetch(url, getState())) {
     return false;
@@ -169,6 +142,37 @@ export const getTeams = (props={}) => async (dispatch, getState) => {
   });
 
   dispatchRequestLogEnd(LOG_GET_TEAMS, url, dispatch);
+}
+
+export const getTeamsStats = (props={}) => async (dispatch, getState) => {
+  const url = "/teams"
+  const params = {"expand": "team.stats"};
+  const urlFinal = urlKeyWithParams(url, params);
+  // console.log(urlFinal);
+  if (!shouldFetch(urlFinal, getState())) {
+    return false;
+  }
+  dispatchRequestLogStart(LOG_GET_TEAMS_STATS, urlFinal, dispatch);
+
+  const response = await nhl.get(urlFinal);
+  const {teams} = response.data;
+  let dispatchData = {};
+  teams.forEach((team, i) => {
+    const {id, teamStats, ...rest} = team;
+    const splits = teamStats[0].splits;
+    const stats = splits[0].stat;
+    const standings = splits[1].stat;
+    const dispatchDataDict = {"teamStats": stats, "teamStandings": standings};
+    dispatchData[id] = dispatchDataDict;
+  });
+
+  dispatch({
+    type: GET_TEAMS_STATS,
+    payload: dispatchData,
+  })
+
+
+  dispatchRequestLogEnd(LOG_GET_TEAMS_STATS, urlFinal, dispatch);
 }
 
 export const getConferences = (props={}) => async (dispatch, getState) => {

@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
-import { Box, Image, Text } from 'grommet';
+import { Box, Text } from 'grommet';
 
-import { teamLogo } from '../../teamLogos';
 import TeamDisplay from './TeamDisplay';
 
 const GameDisplay = props => {

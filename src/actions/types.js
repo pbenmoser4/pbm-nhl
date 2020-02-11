@@ -3,6 +3,8 @@ export const LOG_GET_STANDINGS = 'LOG_GET_STANDINGS';
 
 export const GET_TEAMS = 'GET_TEAMS';
 export const LOG_GET_TEAMS = 'LOG_GET_TEAMS';
+export const GET_TEAMS_STATS = 'GET_TEAM_STATS';
+export const LOG_GET_TEAMS_STATS = 'LOG_GET_TEAM_STATS';
 
 export const GET_DIVISION = 'GET_DIVISION';
 export const LOG_GET_DIVISION = 'LOG_GET_DIVISION';

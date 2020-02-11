@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 import {
-  GET_CONFERENCE,
   GET_CONFERENCES,
 } from '../actions/types';
 

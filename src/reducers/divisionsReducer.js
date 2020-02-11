@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 import {
-  GET_DIVISION,
   GET_DIVISIONS,
 } from '../actions/types';
 

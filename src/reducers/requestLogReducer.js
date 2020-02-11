@@ -1,6 +1,7 @@
 import {
   LOG_GET_STANDINGS,
   LOG_GET_TEAMS,
+  LOG_GET_TEAMS_STATS,
   LOG_GET_DIVISIONS,
   LOG_GET_CONFERENCES,
   LOG_GET_SCHEDULE,
@@ -26,6 +27,8 @@ export default (state={}, action) => {
     case LOG_GET_CONFERENCES:
       return updateRequestLogWithPayload(state, action.payload);
     case LOG_GET_SCHEDULE:
+      return updateRequestLogWithPayload(state, action.payload);
+    case LOG_GET_TEAMS_STATS:
       return updateRequestLogWithPayload(state, action.payload);
     default:
       return state;

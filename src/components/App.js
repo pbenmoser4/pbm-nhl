@@ -4,7 +4,7 @@ import { Router, Route, Switch } from 'react-router-dom';
 import history from '../history';
 import AppHeader from './AppHeader';
 import HomePage from './HomePage/HomePage';
-import StandingsList from './StandingsList';
+import TeamList from './TeamsPage/TeamList';
 
 const App = props => {
   return (
@@ -13,7 +13,7 @@ const App = props => {
         <AppHeader />
         <Switch>
           <Route path="/" exact component={HomePage} />
-          <Route path="/standings" exact component={StandingsList} />
+          <Route path="/teams" exact component={TeamList} />
         </Switch>
       </Router>
     </Fragment>

@@ -14,11 +14,6 @@ const ORDER_BY_LEAGUE = 'League';
 const ORDER_BY_CONFERENCE = 'Conference';
 const ORDER_BY_DIVISION = 'Division';
 
-const today = () => {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate() - 1).padStart(2, '0')}`
-}
-
 const StandingsList = props => {
   const [standingsGroup, setStandingsGroup] = useState(ORDER_BY_LEAGUE);
   useEffect(() => {

@@ -10,7 +10,7 @@ const AppHeader = props => {
       </Box>
       <Box direction="row" gap="small" pad="xsmall" background="light-1">
         <Link to="/">Home</Link>
-        <Link to="/standings">Teams</Link>
+        <Link to="/teams">Teams</Link>
         <Link to="/">Leaders</Link>
         <Link to="/">Gamelog</Link>
       </Box>

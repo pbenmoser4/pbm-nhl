@@ -5,7 +5,6 @@ import { teamLogo } from '../../teamLogos';
 
 const TeamDisplay = props => {
   const {team} = props;
-  console.log(team);
   const logoSize = "75px";
 
   const renderDisplay = () => {
@@ -13,6 +12,7 @@ const TeamDisplay = props => {
       const {wins, losses, ot} = team.leagueRecord;
       return (
         <Box direction="column" gap="xsmall" align="center" justify="center">
+          <Text size="small" weight="bold">{team.name}</Text>
           <Box width={logoSize} height={logoSize} align="center" justify="center">
             <Image
               fit="contain"
@@ -20,8 +20,9 @@ const TeamDisplay = props => {
               />
           </Box>
           <Box direction="column" justify="center" align="center">
-            <Text size="small">{team.name}</Text>
-            <Text size="xsmall">{`${team.division.name} | (${wins}-${losses}-${ot})`}</Text>
+            <Text size="xsmall">{`${team.division.name} Division`}</Text>
+            <Text size="xsmall">{`(${wins}-${losses}-${ot}) | ${team.points} pts`}</Text>
+            <Text size="xsmall">{`Streak: ${team.streak.streakCode}`}</Text>
           </Box>
         </Box>
       )
